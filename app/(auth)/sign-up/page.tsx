@@ -80,17 +80,16 @@ function page() {
     }
   };
   return (
-    <div className="w-full h-screen bg-white">
-      <div className="flex justify-center items-center text-gray-800">
-        <div className="text-center">
-          <h2>join Anonymouse platform</h2>
-          <p>Sign up to Anonymouse platform</p>
+    <div className="flex justify-center items-center text-gray-800 min-h-screen ">
+      <div className="flex w-full flex-col items-center py-8 space-y-4 ">
+        <div className="text-center py-4">
+          <h2 className="text-3xl md:text-5xl mb-3">
+            join Anonymouse platform
+          </h2>
+          <p className="text-xl">Sign in to Anonymouse platform</p>
         </div>
 
         <Card className="w-full sm:max-w-md">
-          <CardHeader>
-            <CardTitle>sign-up</CardTitle>
-          </CardHeader>
           <CardContent>
             <form id="form-rhf-demo" onSubmit={form.handleSubmit(onSubmit)}>
               <FieldGroup>
@@ -99,12 +98,18 @@ function page() {
                   control={form.control}
                   render={({ field, fieldState }) => (
                     <Field>
-                      <FieldLabel htmlFor="usernameField">Username</FieldLabel>
+                      <FieldLabel
+                        htmlFor="usernameField"
+                        className="md:text-lg ml-2"
+                      >
+                        Username
+                      </FieldLabel>
                       <Input
                         {...field}
                         id="usernameField"
                         // aria-invalid={fieldState.invalid}
                         placeholder="Username"
+                        className="md:text-lg "
                         onChange={(e) => {
                           field.onChange(e);
                           debounced(e.target.value);
@@ -112,7 +117,7 @@ function page() {
                       />
                       {checkingUsername && <Loader2 className="animate-spin" />}
                       <p
-                        className={`${usernameMessage === "username is unique" ? "text-green-500" : "text-red-500"}`}
+                        className={`md:text-lg ml-2 ${usernameMessage === "username is unique" ? "text-green-500" : "text-red-500"}`}
                       >
                         test {usernameMessage}
                       </p>
@@ -125,8 +130,18 @@ function page() {
                   control={form.control}
                   render={({ field, fieldState }) => (
                     <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel htmlFor="emailField">email</FieldLabel>
-                      <Input {...field} id="emailField" placeholder="Email" />
+                      <FieldLabel
+                        htmlFor="emailField"
+                        className="md:text-lg ml-2"
+                      >
+                        email
+                      </FieldLabel>
+                      <Input
+                        {...field}
+                        id="emailField"
+                        placeholder="Email"
+                        className="md:text-lg "
+                      />
                       {fieldState.invalid && (
                         <FieldError errors={[fieldState.error]} />
                       )}
@@ -139,11 +154,17 @@ function page() {
                   control={form.control}
                   render={({ field, fieldState }) => (
                     <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel htmlFor="passwordField">password</FieldLabel>
+                      <FieldLabel
+                        htmlFor="passwordField"
+                        className="md:text-lg ml-2"
+                      >
+                        password
+                      </FieldLabel>
                       <Input
                         {...field}
                         id="passwordField"
                         placeholder="password"
+                        className="md:text-lg"
                       />
                       {fieldState.invalid && (
                         <FieldError errors={[fieldState.error]} />
@@ -152,7 +173,11 @@ function page() {
                   )}
                 />
 
-                <Button type="submit" disabled={isSubmitting}>
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="md:text-lg ml-2"
+                >
                   {isSubmitting ? (
                     <>
                       <Loader2 className="h-4 w-4 animate-spin" />
@@ -165,8 +190,8 @@ function page() {
               </FieldGroup>
             </form>
           </CardContent>
-          <div className="py-4 text-center flex">
-            <p>
+          <div className="pb-4 text-left ml-6">
+            <p className="text-lg">
               Already have an account?{" "}
               <Link
                 href={`/sign-in`}
