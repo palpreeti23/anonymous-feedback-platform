@@ -1,15 +1,17 @@
 import UserModel from "@/model/User";
 import dbConnect from "@/lib/dbConnect";
-import { useSession } from "next-auth/react";
+import { auth } from "../../auth/[...nextauth]/option";
+import { User } from "next-auth";
 
 export async function DELETE(
   req: Request,
   { params }: { params: { messageid: string } },
 ) {
   await dbConnect();
-  const { data: session } = useSession();
-  const user = session?.user;
-  if (!user || !session.user) {
+  const session = await auth();
+  const user: User = session?.user as User;
+
+  if (!user || !session?.user) {
     return Response.json(
       {
         success: false,
@@ -58,7 +60,7 @@ export async function DELETE(
         message: "error deletinn message",
       },
       {
-        status: 401,
+        status: 500,
       },
     );
   }
