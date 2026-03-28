@@ -1,7 +1,6 @@
 import UserModel from "@/model/User";
 import dbConnect from "@/lib/dbConnect";
 import { z } from "zod";
-import { ApiResponse } from "@/types/ApiResponse";
 import { usernameValidation } from "@/schemas/signupSchema";
 
 const usernameQuerySchema = z.object({
@@ -39,10 +38,10 @@ export async function GET(request: Request) {
       return Response.json(
         {
           success: false,
-          message: "username already exist",
+          message: "username already taken",
         },
         {
-          status: 400,
+          status: 409,
         },
       );
     }
@@ -50,10 +49,10 @@ export async function GET(request: Request) {
     return Response.json(
       {
         success: true,
-        message: "unique username",
+        message: "username is unique",
       },
       {
-        status: 500,
+        status: 200,
       },
     );
   } catch (error) {
@@ -64,7 +63,7 @@ export async function GET(request: Request) {
         message: "error cheching username",
       },
       {
-        status: 401,
+        status: 500,
       },
     );
   }

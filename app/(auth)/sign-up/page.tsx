@@ -47,8 +47,9 @@ function page() {
 
         try {
           const response = await axios.get(
-            `/api/check-username-uniqueness/username?=${username}`,
+            `/api/check-username-uniqueness?username=${username}`,
           );
+
           setUsernameMessage(response.data?.message);
         } catch (error) {
           console.error("error checking username uniqueness");
@@ -69,14 +70,15 @@ function page() {
     setIsSubmitting(true);
     try {
       const res = await axios.post<ApiResponse>(`/api/sign-up`, data);
-      toast.success(res.data?.message);
+      toast.success(res?.data.message);
       route.replace(`/verify/${username}`);
       setIsSubmitting(false);
     } catch (error) {
-      console.error("error submitting sign-up data");
+      console.error("error in sign-up user", error);
       const axiosError = error as AxiosError<ApiResponse>;
       const errorMessage = axiosError.response?.data.message;
       toast.error(errorMessage);
+      setIsSubmitting(false);
     }
   };
   return (
@@ -107,7 +109,7 @@ function page() {
                       <Input
                         {...field}
                         id="usernameField"
-                        // aria-invalid={fieldState.invalid}
+                        aria-invalid={fieldState.invalid}
                         placeholder="Username"
                         className="md:text-lg "
                         onChange={(e) => {
@@ -115,6 +117,10 @@ function page() {
                           debounced(e.target.value);
                         }}
                       />
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
+
                       {checkingUsername && <Loader2 className="animate-spin" />}
                       <p
                         className={`md:text-lg ml-2 ${usernameMessage === "username is unique" ? "text-green-500" : "text-red-500"}`}
@@ -184,7 +190,7 @@ function page() {
                       please wait
                     </>
                   ) : (
-                    "signup"
+                    "Signup"
                   )}
                 </Button>
               </FieldGroup>

@@ -1,12 +1,14 @@
 import UserModel from "@/model/User";
 import dbConnect from "@/lib/dbConnect";
 
-async function POST(request: Request) {
+export async function POST(request: Request) {
   await dbConnect();
 
   try {
     const { username, code } = await request.json();
-    const user = await UserModel.findOne({ username });
+    console.log("Received username:", username, "code:", code);
+    const decodedUsername = decodeURIComponent(username);
+    const user = await UserModel.findOne({ username: decodedUsername });
     if (!user) {
       return Response.json(
         {
@@ -14,16 +16,16 @@ async function POST(request: Request) {
           message: "user not found",
         },
         {
-          status: 401,
+          status: 400,
         },
       );
     }
 
-    const isVerifyCideCorrect = user.verifyCode == code;
-    const isVerificationCodeExpired =
-      new Date(user.verifyCodeExpiry) > new Date();
+    const isCodeValid = user.verifyCode === code;
+    const isCodeNotExpired = new Date(user.verifyCodeExpiry) > new Date();
 
-    if (isVerifyCideCorrect && isVerificationCodeExpired) {
+    if (isCodeValid && isCodeNotExpired) {
+      user.isVarified = true;
       await user.save();
       return Response.json(
         {
@@ -31,10 +33,10 @@ async function POST(request: Request) {
           message: "user account verified successfully",
         },
         {
-          status: 500,
+          status: 200,
         },
       );
-    } else if (!isVerificationCodeExpired) {
+    } else if (!isCodeNotExpired) {
       return Response.json(
         {
           success: false,

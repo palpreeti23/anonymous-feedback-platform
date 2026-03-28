@@ -30,8 +30,12 @@ export async function POST(req: Request) {
       );
     }
 
-    const newMessage = { content, createdAt: new Date() };
+    const newMessage = {
+      content,
+      createdAt: new Date(),
+    };
     user.messages.push(newMessage as Message);
+    await user.save();
     return Response.json(
       {
         success: true,
@@ -41,8 +45,8 @@ export async function POST(req: Request) {
         status: 200,
       },
     );
-  } catch (error) {
-    console.log("error sending message", error);
+  } catch (error: any) {
+    console.log("error sending message", error.message || error);
     return Response.json(
       {
         success: false,

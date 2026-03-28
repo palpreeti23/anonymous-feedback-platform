@@ -1,27 +1,18 @@
 import mongoose, { Document, Schema } from "mongoose";
 
 export interface Message extends Document {
-  id: string;
   content: string;
   createdAt: Date;
-  userId: string;
+  // userId: string;
 }
 
 export const MessageSchema: Schema<Message> = new Schema({
-  id: {
-    type: String,
-    required: true,
-  },
   content: {
     type: String,
     required: true,
   },
   createdAt: {
     type: Date,
-    required: true,
-  },
-  userId: {
-    type: String,
     required: true,
   },
 });
