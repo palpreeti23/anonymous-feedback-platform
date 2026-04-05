@@ -3,7 +3,6 @@ import Credentials from "next-auth/providers/credentials";
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User";
 import bcrypt from "bcryptjs";
-import { error } from "console";
 
 export const { handlers, auth } = NextAuth({
   providers: [
@@ -49,7 +48,7 @@ export const { handlers, auth } = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token._id = user._id.toString();
+        token._id = (user as any)._id?.toString() || (user as any).id;
         token.isVarified = user.isVarified;
         token.username = user.username;
         token.isAcceptingMessages = user.isAcceptingMessages;
@@ -59,7 +58,7 @@ export const { handlers, auth } = NextAuth({
     },
     async session({ session, token }) {
       if (token) {
-        session.user._id = token._id;
+        session.user._id = token._id as string;
         session.user.username = token.username;
         session.user.isAcceptingMessages = token.isAcceptingMessages;
         session.user.isVarified = token.isVarified;

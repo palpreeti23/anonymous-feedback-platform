@@ -4,7 +4,6 @@ import { Message } from "@/model/User";
 import MessageCard from "@/components/MessageCard";
 import axios, { AxiosError } from "axios";
 import { ApiResponse } from "@/types/ApiResponse";
-import { RefreshCcw } from "lucide-react";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
 
@@ -12,7 +11,6 @@ function Inbox() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
   const { data: session, status } = useSession();
-  console.log(session?.user._id);
 
   const fetchMessage = useCallback(
     async (refresh: boolean = false) => {
@@ -30,7 +28,6 @@ function Inbox() {
         toast(errorMessage || "failed to fetch message settings");
       } finally {
         setLoading(false);
-        // setIsSwiitchLoading(false);
       }
     },
     [setMessages, setLoading],
@@ -47,14 +44,15 @@ function Inbox() {
     setMessages(messages.filter((msg) => msg._id.toString() !== messageId));
   };
   return (
-    <div className="w-full h-screen flex flex-col text-left px-8 ">
-      <h2 className="text-xl md:text-3xl py-4">
+    <div className="w-full h-full flex flex-col text-left px-8 md:w-2/3 md:mx-auto overflow-y-auto no-scrollbar py-4">
+      <h2 className="text-xl md:text-3xl py-4 ">
         Your Messages : <span className="">{messages.length}</span>
       </h2>
-      <div>
+      <div className="w-full space-y-2 ">
         {messages.length > 0
-          ? messages.map((msg) => (
+          ? messages.map((msg, index) => (
               <MessageCard
+                key={index}
                 message={msg}
                 onMessageDelete={messageDeleteHandler}
               />

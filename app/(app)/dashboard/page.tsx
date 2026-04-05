@@ -19,8 +19,6 @@ function Dashboard() {
   const user = session?.user;
   const username = user?.username;
 
-  // console.log("session:", session, "status:", status);
-
   const form = useForm({
     resolver: zodResolver(isAcceptingMessageSchema),
     defaultValues: {
@@ -67,7 +65,7 @@ function Dashboard() {
   };
 
   if (status === "loading") {
-    return <p>Loading...</p>; // wait until session is fetched
+    return <p>Loading...</p>;
   }
 
   if (!session || !session.user) {
@@ -81,13 +79,14 @@ function Dashboard() {
     navigator.clipboard.writeText(profileUrl);
     toast.success("URL copied to clipboard");
   };
+
   return (
-    <div className="w-full min-h-screen flex flex-col items-center pt-24">
-      <div className="w-3/5 bg-gray-50 shadow-2xl shadow-gray-400 rounded-2xl ">
+    <div className="w-full min-h-screen flex flex-col items-center pt-16">
+      <div className="w-full md:w-2/3 bg-gray-50 shadow-2xl shadow-gray-300 rounded-2xl ">
         {" "}
         <div className="flex flex-col text-center py-6 space-y-4">
           <h2 className="text-xl md:text-3xl pt-10">Your Dashboarrd</h2>
-          <p className="pb-6">
+          <p className="pb-6 px-2">
             Welcome to CipherTalk—send and receive messages anonymously
           </p>
 
@@ -104,13 +103,13 @@ function Dashboard() {
           </div>
           <Separator />
 
-          <div className="flex justify-center gap-10 my-4 w-full">
+          <div className="flex flex-col md:flex-row md:justify-center gap-8 my-4 w-full ">
             <Link href={`#`}>
               <button
                 onClick={() => setShow(true)}
-                className="bg-black text-white py-1 px-6 rounded shadow-lg shadow-black/20"
+                className="bg-black text-white px-6 py-1 rounded shadow-lg shadow-black/20 border border-gray-300 "
               >
-                create new Link
+                Create New Link
               </button>
             </Link>
             <Link href={`/inbox`}>
@@ -121,7 +120,7 @@ function Dashboard() {
           </div>
           {show && (
             <div className="flex flex-col items-center">
-              <div className="flex py-8 w-1/2 ">
+              <div className="flex py-8 w-full md:w-1/2 px-8 ">
                 <input
                   type="text"
                   className="w-full rounded-l-lg text-black py-1 px-3 border border-gray-400"

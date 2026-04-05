@@ -47,10 +47,10 @@ function page() {
     <div className="flex justify-center items-center text-gray-800 min-h-screen ">
       <div className="flex w-full flex-col items-center py-8 space-y-4 ">
         <div className="text-center py-4">
-          <h2 className="text-3xl md:text-5xl mb-3">
-            join Anonymouse platform
-          </h2>
-          <p className="text-xl">Sign in to Anonymouse platform</p>
+          <h2 className="text-3xl md:text-5xl mb-3">Verify Your Account</h2>
+          <p className="text-xl">
+            Please enter the verification code sent to your email.
+          </p>
         </div>
 
         <Card className="w-full sm:max-w-md py-8">
@@ -64,7 +64,7 @@ function page() {
                     <Field>
                       <FieldLabel
                         htmlFor="codeField"
-                        className="md:text-lg ml-2"
+                        className="md:text-lg ml-2 text-gray-600"
                       >
                         Code
                       </FieldLabel>
@@ -72,7 +72,7 @@ function page() {
                         {...field}
                         id="codeField"
                         // aria-invalid={fieldState.invalid}
-                        placeholder="Code"
+                        // placeholder="Code"
                         className="md:text-lg "
                       />
                     </Field>
@@ -80,7 +80,7 @@ function page() {
                 />
 
                 <Button type="submit" className="md:text-lg ">
-                  submit
+                  Verify Code
                 </Button>
               </FieldGroup>
             </form>

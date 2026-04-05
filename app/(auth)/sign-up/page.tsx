@@ -82,13 +82,12 @@ function page() {
     }
   };
   return (
-    <div className="flex justify-center items-center text-gray-800 min-h-screen ">
-      <div className="flex w-full flex-col items-center py-8 space-y-4 ">
+    <div className="flex justify-center items-center min-h-screen  text-foreground ">
+      {/* <div className=" w-full flex flex-col items-center py-8 space-y-4 "> */}
+      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
         <div className="text-center py-4">
-          <h2 className="text-3xl md:text-5xl mb-3">
-            join Anonymouse platform
-          </h2>
-          <p className="text-xl">Sign in to Anonymouse platform</p>
+          <h2 className="text-3xl md:text-5xl mb-3">Join Anonymous Platform</h2>
+          <p className="text-xl">sign up to anonymous platform</p>
         </div>
 
         <Card className="w-full sm:max-w-md">
@@ -100,12 +99,12 @@ function page() {
                   control={form.control}
                   render={({ field, fieldState }) => (
                     <Field>
-                      <FieldLabel
+                      {/* <FieldLabel
                         htmlFor="usernameField"
                         className="md:text-lg ml-2"
                       >
                         Username
-                      </FieldLabel>
+                      </FieldLabel> */}
                       <Input
                         {...field}
                         id="usernameField"
@@ -125,7 +124,7 @@ function page() {
                       <p
                         className={`md:text-lg ml-2 ${usernameMessage === "username is unique" ? "text-green-500" : "text-red-500"}`}
                       >
-                        test {usernameMessage}
+                        {usernameMessage}
                       </p>
                     </Field>
                   )}
@@ -136,12 +135,12 @@ function page() {
                   control={form.control}
                   render={({ field, fieldState }) => (
                     <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel
+                      {/* <FieldLabel
                         htmlFor="emailField"
                         className="md:text-lg ml-2"
                       >
                         email
-                      </FieldLabel>
+                      </FieldLabel> */}
                       <Input
                         {...field}
                         id="emailField"
@@ -160,16 +159,16 @@ function page() {
                   control={form.control}
                   render={({ field, fieldState }) => (
                     <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel
+                      {/* <FieldLabel
                         htmlFor="passwordField"
                         className="md:text-lg ml-2"
                       >
                         password
-                      </FieldLabel>
+                      </FieldLabel> */}
                       <Input
                         {...field}
                         id="passwordField"
-                        placeholder="password"
+                        placeholder="Password"
                         className="md:text-lg"
                       />
                       {fieldState.invalid && (
@@ -190,7 +189,7 @@ function page() {
                       please wait
                     </>
                   ) : (
-                    "Signup"
+                    "Sign up"
                   )}
                 </Button>
               </FieldGroup>
@@ -203,7 +202,7 @@ function page() {
                 href={`/sign-in`}
                 className="text-blue-500 hover:text-blue-800 ml-1"
               >
-                sign-in
+                Sign-in
               </Link>
             </p>
           </div>

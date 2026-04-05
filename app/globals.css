@@ -128,42 +128,21 @@
     @apply font-sans;
   }
 }
-/* 
-.stars {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 0;
+
+html,
+body {
+  @apply m-0 p-0 overflow-x-hidden h-full;
+  max-height: 100vh;
+  max-height: 100dvh;
 }
 
-
-.stars::before,
-.stars::after {
-  content: "";
-  position: absolute;
-  width: 200%; 
-  height: 200%; 
-
-  background-image: radial-gradient(white 1px, transparent 1px);
-  background-size: 50px 50px; 
-
-  animation: moveStars 20s linear infinite;
-}
-
-
-.stars::after {
-  top: 100%;
-}
-
-@keyframes moveStars {
-  from {
-    transform: translateY(0);
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
   }
-  to {
-    transform: translateY(-50%);
-  }
-} */
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

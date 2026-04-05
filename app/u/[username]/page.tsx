@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import axios from "axios";
 import { useParams } from "next/navigation";
@@ -17,8 +16,6 @@ export default function SendMessagePage() {
     "What's a small goal you're working on right now?",
   ];
 
-  // : Array.isArray(username) ? username[0] : username,
-
   const sendMessage = async () => {
     try {
       const res = await axios.post("/api/send-messages", {
@@ -32,15 +29,6 @@ export default function SendMessagePage() {
       setResponseMsg(
         error?.response?.data?.message || "User is not accepting messages.",
       );
-      // return Response.json(
-      //   {
-      //     success: false,
-      //     message: "user not accepting msg",
-      //   },
-      //   {
-      //     status: 500,
-      //   },
-      // );
     }
   };
 
@@ -49,7 +37,7 @@ export default function SendMessagePage() {
 
     try {
       const res = await axios.post("/api/suggest-message");
-      console.log("SUGGEST API RESPONSE:", res.data);
+      // console.log("SUGGEST API RESPONSE:", res.data);
 
       // Check if response has message
       if (res.data.success && typeof res.data.message === "string") {
@@ -60,7 +48,7 @@ export default function SendMessagePage() {
       }
     } catch (error: any) {
       console.error("SUGGEST ERROR:", error.response?.data || error.message);
-      setSuggestions([]);
+      setSuggestions(fallback);
     }
 
     setLoading(false);
@@ -68,10 +56,8 @@ export default function SendMessagePage() {
   return (
     <div className="max-w-xl mx-auto p-6 space-y-6">
       <h1 className="text-3xl font-bold text-center">
-        Send anonymous message to {username}
+        Send Anonymous Message To {username}
       </h1>
-
-      {/* Message Input */}
 
       <textarea
         value={message}

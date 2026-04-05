@@ -1,10 +1,8 @@
 import UserModel from "@/model/User";
 import dbConnect from "@/lib/dbConnect";
-import { useSession } from "next-auth/react";
 import { User } from "next-auth";
 import mongoose from "mongoose";
 import { auth } from "../auth/[...nextauth]/option";
-import { string } from "zod";
 
 export async function GET(req: Request) {
   await dbConnect();
@@ -24,38 +22,17 @@ export async function GET(req: Request) {
     );
   }
 
-  // const userId = new mongoose.Types.ObjectId(user._id);
-  // const userDoc = await UserModel.findById(userId);
-  // console.log("USER DOC:", userDoc);
-
-  const rawId = user._id;
-
-  // Validate user._id
-  if (typeof rawId !== "string" || !mongoose.Types.ObjectId.isValid(rawId)) {
-    return Response.json(
-      { success: false, message: "invalid user ID" },
-      { status: 400 },
-    );
-  }
-  console.log("session user._id:", user._id, typeof user._id);
-
-  const userId = rawId; // keep it as string
+  const userId = new mongoose.Types.ObjectId(user._id);
 
   try {
-    const userDoc = await UserModel.findById(userId);
-    if (!userDoc) {
-      return Response.json(
-        { success: false, message: "user not found" },
-        { status: 404 },
-      );
-    }
-
     const result = await UserModel.aggregate([
       { $match: { _id: userId } },
       { $unwind: { path: "$messages", preserveNullAndEmptyArrays: true } },
       { $sort: { "messages.createdAt": -1 } },
       { $group: { _id: "$_id", messages: { $push: "$messages" } } },
     ]);
+
+    // console.log("API RESPONSE", result.data);
 
     if (!result || result.length === 0) {
       return Response.json(
@@ -72,7 +49,7 @@ export async function GET(req: Request) {
     return Response.json(
       {
         success: true,
-        message: result[0].messages,
+        messages: result[0].messages,
       },
       {
         status: 200,

@@ -2,10 +2,18 @@
 import { User } from "next-auth";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 function Navbar() {
   const { data: session } = useSession();
   const user: User = session?.user as User;
+  const route = useRouter();
+  const signOutHandler = async () => {
+    await signOut({
+      callbackUrl: `/sign-in`,
+      redirect: true,
+    });
+  };
 
   return (
     <nav className={`w-full rounded py-3 shadow-md my-1  bg-white`}>
@@ -17,7 +25,7 @@ function Navbar() {
             <p className="md:text-xl pt-1">welcome {user?.username}</p>
             <button
               className="py-1 px-4 rounded bg-black text-white"
-              onClick={() => signOut()}
+              onClick={signOutHandler}
             >
               SignOut
             </button>
