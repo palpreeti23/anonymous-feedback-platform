@@ -38,10 +38,11 @@ export const { handlers, auth } = NextAuth({
           } else {
             throw new Error("incorrect password");
           }
-        } catch (error: any) {}
-        throw new Error(
-          error instanceof Error ? error.message : JSON.stringify(error),
-        );
+        } catch (error: any) {
+          throw new Error(
+            error instanceof Error ? error.message : JSON.stringify(error),
+          );
+        }
       },
     }),
   ],
